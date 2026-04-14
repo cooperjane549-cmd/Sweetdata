@@ -23,11 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private var rewardedInterstitialAd: RewardedInterstitialAd? = null
     
-    // New Project Constants (Hardcoded)
-    private val APP_ID = "1:676123277528:android:3ebdd46817a2c69576ffad"
-    private val API_KEY = "AIzaSyAr8lD08wGwjZk3Fp7BVCHyJ_T2ofERXiQ"
-    private val PROJECT_ID = "sweetdata-85207"
-    private val DB_URL = "https://sweetdata-85207-default-rtdb.firebaseio.com"
     private val AD_UNIT_ID = "ca-app-pub-2344867686796379/1476405830"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +30,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Explicit Initialization: Ensures connectivity
+        // Explicit Initialization
         val options = FirebaseOptions.Builder()
-            .setApplicationId(APP_ID)
-            .setApiKey(API_KEY)
-            .setProjectId(PROJECT_ID)
-            .setDatabaseUrl(DB_URL)
+            .setApiKey("AIzaSyAr8lD08wGwjZk3Fp7BVCHyJ_T2ofERXiQ")
+            .setApplicationId("1:676123277528:android:3ebdd46817a2c69576ffad")
+            .setProjectId("sweetdata-85207")
+            .setDatabaseUrl("https://sweetdata-85207-default-rtdb.firebaseio.com")
             .build()
 
         if (FirebaseApp.getApps(this).isEmpty()) {
@@ -90,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBarTrust.progress = adsWatched
                 binding.tvProgressText.text = "$adsWatched/25 Ads"
 
-                // The 25-Ad Rule: 15MB Trust Pack is only visible after 25 ads
+                // The 25-Ad Gate: Logic to hide the 'Redeem 15MB' button until 25 ads are watched
                 if (adsWatched >= 25 && !trustClaimed) {
                     binding.btnRedeemTrust.visibility = View.VISIBLE
                 } else {
@@ -99,7 +94,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Detailed Error Logging
                 Toast.makeText(this@MainActivity, "DB Error: ${error.message}", Toast.LENGTH_LONG).show()
             }
         })
@@ -110,7 +104,6 @@ class MainActivity : AppCompatActivity() {
         RewardedInterstitialAd.load(this, AD_UNIT_ID, adRequest, object : RewardedInterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 rewardedInterstitialAd = null
-                // Toast.makeText(this@MainActivity, "Ad Load Failed: ${adError.message}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onAdLoaded(ad: RewardedInterstitialAd) {
@@ -143,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                 val newAdsCount = adsWatched + 1
                 mutableData.child("ads_watched").value = newAdsCount
 
+                // Referrer gets +2.5 MB only after the friend watches 25 ads
                 if (newAdsCount == 25 && referredBy != null) {
                     database.child("users").child(referredBy).child("balance").runTransaction(object : Transaction.Handler {
                         override fun doTransaction(refData: MutableData): Transaction.Result {

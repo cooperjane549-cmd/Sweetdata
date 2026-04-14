@@ -9,63 +9,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
             android:text="SweetData"
             android:textColor="#FF3131"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="32dp"/>
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etEmail"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Earn Data Rewards Daily"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnGoogleSignIn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#111111"
-            android:hint="Email Address"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#555555"
-            android:padding="16dp"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp"/>
+            android:backgroundTint="#FFFFFF"
+            android:text="Sign in with Google"
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#111111"
-            android:hint="Password"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#555555"
-            android:padding="16dp"
-            android:inputType="textPassword"
-            android:layout_marginBottom="24dp"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="#FF3131"
-                android:text="LOGIN / REGISTER"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:indeterminateTint="#FFFFFF"/>
-        </FrameLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminateTint="#FF3131"
+            android:visibility="gone" />
 
     </LinearLayout>
 
