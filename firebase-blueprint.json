@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user balance, ad stats, and referral info.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "balance": { "type": "number", "description": "Current MB balance" },
+        "adsWatched": { "type": "integer", "description": "Total rewarded ads watched" },
+        "trustPackClaimed": { "type": "boolean", "description": "Whether the 15MB trust pack was claimed" },
+        "referralCode": { "type": "string" },
+        "referredBy": { "type": "string", "description": "UID of the user who referred this user" },
+        "tasksCompleted": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "balance", "adsWatched", "trustPackClaimed"]
+    },
+    "Withdrawal": {
+      "title": "Withdrawal Request",
+      "description": "Stores data redemption requests.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "amount", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data"
+    },
+    "/withdrawals/{withdrawalId}": {
+      "schema": "Withdrawal",
+      "description": "Redemption requests"
+    }
+  }
+}
