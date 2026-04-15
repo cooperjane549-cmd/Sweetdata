@@ -5,40 +5,19 @@
       "description": "Stores user balance, ad stats, and referral info.",
       "type": "object",
       "properties": {
-        "email": { "type": "string" },
-        "displayName": { "type": "string" },
-        "photoURL": { "type": "string" },
         "balance": { "type": "number", "description": "Current MB balance" },
-        "adsWatched": { "type": "integer", "description": "Total rewarded ads watched" },
-        "trustPackClaimed": { "type": "boolean", "description": "Whether the 15MB trust pack was claimed" },
-        "referralCode": { "type": "string" },
-        "referredBy": { "type": "string", "description": "UID of the user who referred this user" },
-        "tasksCompleted": { "type": "array", "items": { "type": "string" } },
-        "createdAt": { "type": "string", "format": "date-time" }
+        "ads_watched": { "type": "number", "description": "Total ads watched" },
+        "trust_pack_claimed": { "type": "boolean", "description": "Whether the 15MB trust pack was claimed" },
+        "referral_code": { "type": "string", "description": "Unique referral code" },
+        "referred_by": { "type": "string", "description": "UID of the user who referred this user" }
       },
-      "required": ["email", "balance", "adsWatched", "trustPackClaimed"]
-    },
-    "Withdrawal": {
-      "title": "Withdrawal Request",
-      "description": "Stores data redemption requests.",
-      "type": "object",
-      "properties": {
-        "userId": { "type": "string" },
-        "amount": { "type": "number" },
-        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
-        "createdAt": { "type": "string", "format": "date-time" }
-      },
-      "required": ["userId", "amount", "status", "createdAt"]
+      "required": ["balance", "ads_watched", "trust_pack_claimed", "referral_code"]
     }
   },
   "firestore": {
-    "/users/{userId}": {
+    "users/{userId}": {
       "schema": "UserProfile",
-      "description": "User profile data"
-    },
-    "/withdrawals/{withdrawalId}": {
-      "schema": "Withdrawal",
-      "description": "Redemption requests"
+      "description": "User data stored in Realtime Database (mapped here for blueprinting)"
     }
   }
 }
